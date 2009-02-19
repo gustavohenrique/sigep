@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="pt-br">
+<head>
+<meta Http-equiv="ContentType" content="text/html" charset="utf-8">
+<title>SIGEP - Sistema de Gerenciamento de Provedor</title>
+<link href="/media/css/base.css" rel="Stylesheet" type="text/css">
+<link href="/media/css/window.css" rel="Stylesheet" type="text/css">
+<link href="/media/css/form.css" rel="Stylesheet" type="text/css">
+
+<style type="text/css">
+#login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -90px;
+  margin-top: -80px;
+}
+input { width: 100px; }
+label { float: left; width: 50px; padding: 3px; }
+.cell { height: 25px; }
+</style>
+</head>
+<body onload="document.forms[0].elements[0].focus();">
+  
+<div id="login">
+  <div class="window" style="width:180px;">
+    <div class="windowtitle">
+      <h1>LOGIN</h1>
+    </div>
+    <div class="windowcontent">
+      <form action="." name="login" method="post">
+        <div class="cell">
+          {{ form.username.label_tag }} {{ form.username }}
+        </div>
+        <div class="cell">
+          {{ form.password.label_tag }} {{ form.password }}
+        </div>
+        <div class="cell">
+          <label>&nbsp;</label><input type="submit" value="Ok" style="width:50px;">
+        </div>
+      </form>
+    </div>
+  </div>
+  {% if form.errors %}
+    <span style="color:red;"><strong>Usuário ou senha incorretos.</strong></span>
+  {% endif %}
+</div>
+  
+</body>
+</html>

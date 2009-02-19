@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="pt-br">
+<head>
+<meta Http-equiv="ContentType" content="text/html" charset="utf-8">
+    
+<link href="/media/css/base.css" rel="Stylesheet" type="text/css">
+<link href="/media/css/menu.css" rel="Stylesheet" type="text/css">
+<link href="/media/css/window.css" rel="Stylesheet" type="text/css">
+<link href="/media/css/form.css" rel="Stylesheet" type="text/css">
+    
+<script src="/media/js/jquery.js" language="javascript" type="text/javascript"></script>
+<script src="/media/js/jquery.dimensions.js" language="javascript" type="text/javascript"></script>
+<script src="/media/js/menu.js" language="javascript" type="text/javascript"></script>
+<script src="/media/js/window.js" language="javascript" type="text/javascript"></script>
+<script src="/media/js/ajax.js" language="javascript" type="text/javascript"></script>
+
+<title>SIGEP</title>
+
+</head>
+<body>
+
+<div id="headmenu">
+  <div id="leftmenu" class="menulink">
+    <ul>
+      <li><a id="insert_menu" href="#" onclick="showMenu(this.id,200,240,26,0)">Cadastro</a></li>
+      <li><a id="find_menu" href="#" onclick="showMenu(this.id,180,65,26,0)">Pesquisa</a></li>
+      <li><a id="finance_menu" href="#" onclick="showMenu(this.id,180,65,26,0)">Financeiro</a></li>
+      <li><a id="tools_menu" href="#" onclick="showMenu(this.id,190,65,26,0)">Ferramentas</a></li>
+      <li><a id="report_menu" href="#" onclick="showMenu(this.id,190,65,26,0)">Relatórios</a></li>
+    </ul>
+  </div>
+  <div id="rightmenu" class="menulink" onclick="document.location='/auth/logout/'">&nbsp;</div>
+</div>
+    
+{% include 'menu.html' %}    
+    
+<center>
+<div id="content" align="center">
+   {% block content %}{% endblock %}
+</div>
+
+<div style="clear: both;"></div>
+</center>
+</body>
+</html>

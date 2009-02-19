@@ -1,0 +1,33 @@
+.formcell {
+  float: left;
+  height: 30px;
+  padding-right: 10px;
+}
+.formcell label {
+  float: left;
+  width: 90px;
+  text-align: right;
+  margin-right: 5px;
+  margin-top: 4px;
+}
+.lineform {
+  clear: both;
+}
+input, select, textarea {
+  border: 1px solid silver;
+  font-size: 12px;
+  padding: 2px;
+}
+input[type="submit"], input[type="button"] {
+  border: 1px solid #5b7aa1;
+  background: url(../image/bgbutton.jpg);
+  height: 26px;
+  width: 100px;
+}
+#error ul, #error li {
+  padding-left: 8px;
+  padding-top: 0px;
+  margin-left: 5px;
+  margin-top: 0px;
+  color: red;
+}

@@ -1,0 +1,33 @@
+<style type="text/css">
+#frameset_ label {
+  float: left;
+  display: block;
+  width: 100px;
+  text-align: right;
+  padding-top: 5px;
+  padding-right: 10px;
+}
+</style>
+<!--<fieldset class="module aligned {{ fieldset.classes }}">-->
+<div id="frameset_">
+  <!--{% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
+  {% if fieldset.description %}<div class="description">{{ fieldset.description|safe }}</div>{% endif %}-->
+  {% for line in fieldset %}
+      <!--<div class="form-row{% if line.errors %} errors{% endif %} {% for field in line %}{{ field.field.name }} {% endfor %} ">-->
+      <div id="row_">
+      {{ line.errors }}
+      {% for field in line %}
+      <div{% if not line.fields|length_is:"1" %} class="field-box"{% endif %}>
+          {% if field.is_checkbox %}
+              {{ field.field }}{{ field.label_tag }}
+          {% else %}
+              {{ field.label_tag }}{{ field.field }}
+          {% endif %}
+          {% if field.field.field.help_text %}<p class="help">{{ field.field.field.help_text|safe }}</p>{% endif %}
+      </div>
+      {% endfor %}
+      </div>
+  {% endfor %}
+  <label>&nbsp;</label><input type="submit" value="Salvar" class="default2" name="_addanother" />
+</div>
+<!--</fieldset>-->

@@ -1,0 +1,27 @@
+.window {
+  border: 1px solid #afaca9;
+  margin-bottom: 10px;
+}
+.windowtitle {
+  background: url(../image/bgwindowtitle.jpg);
+  height: 20px;
+  padding: 2px;
+  border-bottom: 1px solid #afaca9;
+}
+.windowcontent {
+  background: url(../image/bgsilver.jpg);
+  padding: 5px;
+  display: block;
+}
+.windowhidden { display: none; }
+.buttonclose, .buttonhide, .buttonshow {
+  width: 14px;
+  height: 14px;
+  background-repeat: no-repeat;
+  float: right;
+  margin: 3px;
+  cursor: pointer;
+}
+.buttonclose { background: url(../image/button/close.jpg); }
+.buttonhide { background: url(../image/button/hide.jpg); }
+.buttonshow { background: url(../image/button/show.jpg); }

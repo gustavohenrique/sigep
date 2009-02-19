@@ -1,0 +1,72 @@
+#headmenu, #leftmenu, #rightmenu, .menubutton {
+  height: 26px;
+}
+#headmenu {
+  width: 100%;
+  background: url(../image/bgmenu01.jpg);
+}
+#leftmenu {
+  letter-spacing: 0px;
+  margin: 0px;
+  padding: 3px;
+  float: left;
+}
+#rightmenu {
+  width: 26px;
+  background: url(../image/closebutton.jpg);
+  background-repeat: no-repeat;
+  margin: 0px;
+  padding: 3px;
+  float: right;
+  cursor: pointer;
+}
+#leftmenu ul, #leftmenu li {  
+  width: 90px;
+  list-style: none;
+  margin: 5px;
+  padding: 0px;
+  display: inline;
+}
+.menulink a:hover, .menulink a:visited, .menulink a:link {
+  color: white;
+  text-decoration: none;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.menufloat {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  padding: 0px;
+  font-size: 13px;
+  border-top: 1px solid #efefef;
+  border-left: 1px solid #efefef;
+  border-right: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+  background-color: #ffffff;
+  display: none;
+  z-index: 10;
+}
+.menufloat li { line-height: 20px; }
+.menufloat ul, .menufloat li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+.menufloat h2 {
+  padding: 5px;
+  margin: 0px;
+  font-size: 13px;
+  font-weight: bold;
+  background: url(../image/bgtoolbar.jpg);
+}
+.menufloat a:hover, .menufloat a:visited, .menufloat a:link {
+  text-decoration: none;
+  color: black;
+  margin-left: 5px;
+}
+.menufloat a:hover {
+  text-decoration: underline;
+}

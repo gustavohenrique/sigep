@@ -1,0 +1,25 @@
+body {
+  font-family: Arial;
+  font-size: 12px;
+  margin: 0px;
+  padding: 0px;
+  background-color: #f8f8f8;
+}
+#content {
+  width:740px;
+  text-align:left;
+  padding: 10px;
+  margin-top: 10px;
+  clear: both;
+  /*-moz-border-radius-topleft: 1.0em;
+  -moz-border-radius-topright: 1.0em;
+  -moz-border-radius-bottomleft: 1.0em;
+  -moz-border-radius-bottomright: 1.0em;*/
+}
+h1 {
+  font-family: Verdana, Arial;
+  font-size: 12px;
+  margin: 3px;
+  padding: 0px;
+  float: left;
+}

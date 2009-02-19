@@ -1,0 +1,25 @@
+<div id="error">
+  {% if status %}
+    <div class="window">
+      <div class="windowtitle">
+         <h1>{{ status|upper }}</h1>
+         <div id="windowform_error" class="buttonclose" onclick="$('#error').hide();"></div>
+      </div>
+      <div id="windowform_error" class="windowcontent">
+  
+    {% ifequal status 'error' %}
+      {% for campo in clientform %}
+        {% if campo.errors %}
+          {{campo.label}} {{campo.errors}}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      {% ifequal status 'ok' %}
+        Cadastro efetuado com sucesso.
+      {% endifequal %}
+    {% endifequal %}
+      </div>
+    </div>
+  {% endif %}
+  
+</div>

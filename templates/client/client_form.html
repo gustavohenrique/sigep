@@ -1,0 +1,191 @@
+{% block content %}
+
+<!-- Calendario -->
+<style type="text/css">
+  @import url(/media/css/jquery-calendar.css);
+</style>
+
+<script src="/media/js/jquery.calendar.js" language="javascript" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+  // Adiciona o componente jquery calendar ao campo
+  $('#id_birth').calendar();
+  // Adiciona ajax nos combobox
+  $('#id_city').change(function() {
+    comboAjax('id_neighborhood', this.value, '{% url comboajax "Neighborhood" "city" "neighborhood" %}');
+    // 1s apos exibir os bairros cadastrados, exibe as ruas cadastradas de acordo com o primeiro bairro selecionado
+    setTimeout(function() { $('#id_neighborhood').trigger('change'); }, 1000);
+  });
+  $('#id_neighborhood').change(function() {
+    comboAjax('id_street', this.value, '{% url comboajax "Street" "neighborhood" "street" %}');
+  });
+  
+  // Acao ao botao add street
+  $('#street_add').click(function(){
+    window.open('/admin/client/street/add/','Street','width=400,height=100');
+  });
+  $('#clientgroup_add').click(function(){
+    window.open('/admin/client/clientgroup/add/','Street','width=400,height=100');
+  });
+})
+</script>
+
+<!-- Ajusta a largura dos campos do form -->
+<style type="text/css">
+#id_clientgroup { width: 150px; }
+#id_type { width: 200px; }
+#id_name { width: 580px; }
+#id_nickname { width: 385px; }
+#id_ssn { width: 200px; }
+#id_ic { width: 120px; }
+#id_ic_agency { width: 135px; }
+#id_birth { width: 80px; }
+#id_phone1, #id_phone2, #id_mobile, #id_fax { width: 102px; }
+#id_email, #id_site { width: 270px; }
+#id_city { width: 200px; }
+#id_neighborhood { width: 220px; }
+#id_zipcode { width: 75px; }
+#id_reference { width: 580px; }
+#id_street { width: 400px; }
+#id_number { width: 98px; }
+</style>
+
+{% include 'client/error_form.html' %}
+
+<div class="window">
+  <div class="windowtitle">
+    <h1>{% if option %}ALTERAR CLIENTE{% else %}CADASTRAR CLIENTE{% endif %}</h1>
+    <div id="windowform_hide_show" class="buttonhide" onclick="hide_show_window(this.id);"></div>
+  </div>
+  <div id="windowform" class="windowcontent">
+    <form action="{% if option %}{% url client_update %}{% else %}{% url client_add %}{% endif %}" method="post">
+      <div id="client" style="clear:both">
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.id }}
+            {{ clientform.clientgroup.label_tag }} {{ clientform.clientgroup }}
+            &nbsp;
+            <input type="button" id="clientgroup_add" value=" + " style="width:20px;height:21px;">
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.type.label_tag }} {{ clientform.type }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.name.label_tag }} {{ clientform.name }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.ssn.label_tag }} {{ clientform.ssn }}  
+          </div>
+          <div class="formcell">
+            {{ clientform.ic.label }} {{ clientform.ic }}  
+          </div>
+          <div class="formcell">
+            {{ clientform.ic_agency.label }} {{ clientform.ic_agency }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.nickname.label_tag }} {{ clientform.nickname }}  
+          </div>
+          <div class="formcell">
+            {{ clientform.birth.label }} {{ clientform.birth }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.phone1.label_tag }} {{ clientform.phone1 }}  
+          </div>
+          <div class="formcell">
+            {{ clientform.phone2.label }} {{ clientform.phone2 }}
+          </div>
+          <div class="formcell">
+            {{ clientform.mobile.label }} {{ clientform.mobile }}
+          </div>
+          <div class="formcell">
+            {{ clientform.fax.label }} {{ clientform.fax }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.email.label_tag }} {{ clientform.email }}  
+          </div>
+          <div class="formcell">
+            {{ clientform.site.label }} {{ clientform.site }}  
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            <label for="id_city">Cidade</label>
+            <select id="id_city" name="city">
+              {% for ci in city_list %}
+                <option value="{{ ci.id }}"{% ifequal ci.id id_city %} selected="selected"{% endifequal %}>{{ ci.city }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="formcell">
+            Bairro
+            <select id="id_neighborhood" name="neighborhood">
+              {% for n in neighborhood_list %}
+                <option value="{{ n.id }}"{% ifequal n.id id_neighborhood %} selected="selected"{% endifequal %}>{{ n.neighborhood }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="formcell">
+            {{ clientform.zipcode.label }} {{ clientform.zipcode }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            <label for="id_street">Endereço</label>
+            <select id="id_street" name="street">
+              {% for s in street_list %}
+                <option value="{{ s.id }}"{% ifequal s.id id_street %} selected="selected"{% endifequal %}">{{ s.street }}</option>
+              {% endfor %}
+            </select>&nbsp;
+            <input type="button" id="street_add" value=" + " style="width:20px;height:21px;">
+          </div>
+          <div class="formcell">
+            {{ clientform.number.label }} {{ clientform.number }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ clientform.reference.label_tag }} {{ clientform.reference }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            <label>&nbsp;</label>
+            {% if option %}
+              <input type="submit" value="Atualizar">&nbsp;
+              <input type="button" value="Voltar" onclick="history.go(-1)">
+            {% else %}
+              <input type="submit" value="Cadastrar">
+            {% endif %}
+          </div>
+        </div>
+        
+        <div style="clear:both;"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}
