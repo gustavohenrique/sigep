@@ -5,10 +5,11 @@
  * @url URL que recebera a requisicao ajax
  */ 
 function _pagination(page, url) {
-  var dados;
-  dados = {'page':page}
+  var dados, text_search;
+  search_text = $('#search_field').val();
+  dados = {'page':page, 'search_text':search_text}
   $.ajax({
-    type: 'GET',
+    type: 'POST',
     url: url,
     dataType: "json",
     data: dados,
@@ -94,6 +95,11 @@ $(document).ready(function() {
     top = (p.top - $('#button_menu_float').height());
     showMenu(this.id, 0, 0, top, p.left);
   });
+  
+  // Limpa o campo de busca ao obter foco
+  $('#search_field').focus(function() { $(this).val(''); });
+  // A cada tecla pressionada, atualiza o datagrid
+  $('#search_field').keyup(function(event) { _pagination(1, grid_url); });
 });
 
 

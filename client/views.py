@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from sigep.client.forms import *
-from sigep.ajaxtools.pagination import *
+#from sigep.ajaxtools.pagination import *
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
@@ -33,6 +33,7 @@ def add(request):
     if c.is_valid():
       c.save()
       status = 'ok'
+      c = ClientForm()  # limpa os campos preenchidos
 
     listing = c.formfill()
     listing.append(('status',status))
@@ -57,8 +58,10 @@ def edit(request):
       id= 0
       
     client = get_object_or_404(Client, pk=id)
+    #client.birth = client.birth.strftime("%d-%m-%Y")
     # cria o form
     c = ClientForm(instance=client)
+    #c.base_fields['birth'].input_formats = ('%d/%m/%Y',) 
     # obtem dados do cliente e a lista de bairros e cidade de acordo com a rua
     listing = c.formfill(client)
     listing.append(('option','update'))
@@ -83,6 +86,7 @@ def update(request):
       
     client = get_object_or_404(Client, pk=id)
     c = ClientForm(request.POST, instance=client)
+    c.base_fields['birth'].input_formats = ('%d/%m/%Y',) 
     # se todos os dados estão corretos, exibe a tela de clientes cadastrados
     if c.is_valid():
       c.save()

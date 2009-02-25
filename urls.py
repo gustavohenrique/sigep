@@ -14,7 +14,10 @@ urlpatterns = patterns('',
     (r'^auth/login/','django.contrib.auth.views.login'),
     (r'^auth/logout/','django.contrib.auth.views.logout_then_login'),
     (r'^admin/(.*)', admin.site.root),    
+    
+    # Apps
     (r'^client/', include('sigep.client.urls')),
+    (r'^networknode/', include('sigep.networknode.urls')),
     
 )
 

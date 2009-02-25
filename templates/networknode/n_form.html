@@ -1,0 +1,92 @@
+{% block content %}
+
+<!-- Ajusta a largura dos campos do form -->
+<style type="text/css">
+#id_plan, #id_accesspoint, #id_proxy, #id_hardware, #id_desc { width: 300px; }
+#id_ip, #id_mac { width: 130px; }
+</style>
+
+{% include 'error_form.html' %}
+
+<div class="window">
+  <div class="windowtitle">
+    <h1>{% if option %}ALTERAR PONTO DE REDE DE{% else %}CADASTRAR PONTO DE REDE DE{% endif %} <span style="color:red">{{ client }}</span></h1>
+    <div id="windowform_hide_show" class="buttonhide" onclick="hide_show_window(this.id);"></div>
+  </div>
+  <div id="windowform" class="windowcontent">
+    <form action="{% if option %}{% url networknode_update %}{% else %}{% url networknode_add %}{% endif %}" method="post">
+      {{ form.id }}
+      <input type="hidden" name="client" id="id_client" value="{{ client_id }}">
+      <div id="client" style="clear:both">
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.plan.label_tag }} {{ form.plan }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.accesspoint.label_tag }} {{ form.accesspoint }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.proxy.label_tag }} {{ form.proxy }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.hardware.label_tag }} {{ form.hardware }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.ip.label_tag }} {{ form.ip }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.mac.label_tag }} {{ form.mac }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.desc.label_tag }} {{ form.desc }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            <label>&nbsp;</label> {{ form.blocked }}  {{ form.blocked.label }}
+          </div>
+
+          <div class="formcell">
+            <label>&nbsp;</label> {{ form.allowed }}  {{ form.allowed.label }}
+          </div>
+        </div>
+
+        <div class="lineform">
+          <div class="formcell">
+            <label>&nbsp;</label>
+            {% if option %}
+              <input type="submit" value="Atualizar">&nbsp;
+              <input type="button" value="Voltar" onclick="history.go(-1)">
+            {% else %}
+              <input type="submit" value="Cadastrar">
+            {% endif %}
+          </div>
+        </div>
+
+        <div style="clear:both;"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

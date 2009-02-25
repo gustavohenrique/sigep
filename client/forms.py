@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 from django.forms.models import ModelForm
 from django.forms import forms
-from django.forms.fields import DateField, IntegerField
+from django.forms.fields import CharField, DateField, IntegerField
 from django.forms.widgets import DateTimeInput, HiddenInput
+from django.contrib.localflavor.br.forms import BRStateSelect
 
 from sigep.client.models import *
 
+class CityForm(ModelForm):
+  state = CharField(label="UF",widget=BRStateSelect(),initial='RJ')
+  
+  class Meta:
+    model = City
+    
 
 class ClientForm(ModelForm):
 
@@ -71,7 +78,7 @@ class ClientForm(ModelForm):
     
     # adiciona dados na lista  
     listing += [
-      ('clientform',self),
+      ('form',self),
       ('city_list',city_list),
       ('neighborhood_list',neighborhood_list),
       ('street_list',street_list),
@@ -83,7 +90,4 @@ class ClientForm(ModelForm):
   class Meta:
     model = Client
 
-class CityForm(ModelForm):
-  class Meta:
-    model = City
     

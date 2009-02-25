@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<script src="/media/js/app/networknode.js" language="javascript" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#windowform_hide_show').trigger('click');
+});
+</script>
+<div class="window">
+  <div class="windowtitle">
+    <h1>PONTOS DE REDE DE <span style="color:red;">{{ client }}</span></h1>
+    <div id="windowlisting_hide_show" class="buttonhide" onclick="hide_show_window(this.id);"></div>
+  </div>
+  <div id="windowlisting" class="windowcontent">
+
+    <!-- datagrid contendo todos os clientes cadastrados -->
+    {% include 'datagrid.html' %}
+  </div>
+</div>
+
+<!-- form para cadastro de cliente -->
+{% include 'networknode/n_form.html' %}
+{% endblock %}
+

@@ -43,14 +43,23 @@ def comboajax(request, modelo, foreignkey, fieldkey):
 
 @login_required
 def datagridx(request):
-  if request.method == 'GET':
+  if request.method == 'POST':
     """
     Retorna valores necessarios para construcao do datagrid em javascript.
     """
     
-    page = int(request.GET.get('page'))
+    page = int(request.POST.get('page'))
+    search_text = request.POST.get('search_text')
+    search_text = search_text.strip()
+    
     fields = ['name','phone1','mobile','street.neighborhood.neighborhood']
-    c = Client.objects.all()  # lista de objetos a serem paginados
+    
+    # se houver algum texto no campo de busca, realiza uma consulta no campo name
+    if search_text != '' and search_text != 'Busca' and len(search_text) > 0:
+      c = Client.objects.filter(name__icontains=search_text)
+    else:
+      c = Client.objects.all()  # lista todos objetos a serem paginados
+      
     return pagination(c, fields, page)
 
 @login_required

@@ -13,6 +13,7 @@ class ClientGroup(models.Model):
   class Meta:
     ordering = ('clientgroup',)
     verbose_name = 'Grupo de Cliente'
+    db_table = 'clientgroup'
 
 
 class City(models.Model):
@@ -25,6 +26,7 @@ class City(models.Model):
   class Meta:
     ordering = ('city','state')
     verbose_name = 'Cidade'
+    db_table = 'city'
   
   
 class Neighborhood(models.Model):
@@ -37,6 +39,7 @@ class Neighborhood(models.Model):
   class Meta:
     ordering = ('neighborhood','city')
     verbose_name = 'Bairro'
+    db_table = 'neighborhood'
 
 
 class Street(models.Model):
@@ -49,6 +52,7 @@ class Street(models.Model):
   class Meta:
     ordering = ('street','neighborhood')
     verbose_name = 'Logradouro'
+    db_table = 'street'
  
 
 class Client(models.Model):
@@ -82,81 +86,7 @@ class Client(models.Model):
   class Meta:
     ordering = ('name','-register')
     verbose_name = 'Cliente'
+    db_table = 'client'
  
-
-class AccessPoint(models.Model):
-  accesspoint = models.CharField(max_length=10,verbose_name=_(u'CPF/CNPJ'))
-  ip = models.IPAddressField(blank=True,null=True,unique=True)
-  netmask = models.IPAddressField(verbose_name=_(u'Máscara'),blank=True,null=True)
-  location = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Localização'))
-  
-  def __unicode__(self):
-    return self.accesspoint
-  
-  class Meta:
-    ordering = ('accesspoint','ip')
-    verbose_name = 'Access Point'
-    verbose_name_plural = 'Access Point'
-
-
-class Proxy(models.Model):
-  proxy = models.CharField(max_length=100,unique=True)
-  desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'))
-  ip = models.IPAddressField(unique=True)
-  netmask = models.IPAddressField(verbose_name=_(u'Máscara'))
-  
-  def __unicode__(self):
-    return self.proxy
-  
-  class Meta:
-    ordering = ('proxy','ip')
-
-
-class Plan(models.Model):
-  plan = models.CharField(max_length=200,verbose_name=_('Plano'),unique=True)
-  desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'))
-  downstream = models.PositiveSmallIntegerField(max_length=4)
-  upstream = models.PositiveSmallIntegerField(max_length=4)
-  price = models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True,verbose_name=_(u'Preço'))
-  
-  def __unicode__(self):
-    return self.plan
-
-  class Meta:
-    ordering = ('plan',)
-    verbose_name = 'Plano de Acesso'
-    verbose_name_plural = 'Planos de Acesso'
-
-class Hardware(models.Model):
-  hardware = models.CharField(max_length=100,unique=True)
-
-  def __unicode__(self):
-    return self.hardware
-  
-  class Meta:
-    ordering = ('hardware',)
-
-
-class NetworkNode(models.Model):
-  client = models.ForeignKey(Client,verbose_name=_(u'Cliente'))
-  plan = models.ForeignKey(Plan,verbose_name=_(u'Plano de Acesso'))
-  accesspoint = models.ForeignKey(AccessPoint)
-  hardware = models.ForeignKey(Hardware)
-  ip = models.IPAddressField(db_index=True)
-  mac = models.CharField(max_length=17,blank=True,null=True,unique=True,db_index=True)
-  desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'))
-  blocked = models.BooleanField(verbose_name=_(u'Bloqueado'),default=False,db_index=True)
-  allowed = models.BooleanField(verbose_name=_(u'Liberado sem MAC'),default=True,db_index=True)
-  
-  def __unicode__(self):
-    return self.ip
-  
-  class Meta:
-    ordering = ('client','ip','accesspoint')
-    verbose_name = 'Ponto de Rede'
-    verbose_name_plural = 'Pontos de Rede'
-
-#from django.contrib import databrowse
-#databrowse.site.register(Client)
 
   

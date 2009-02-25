@@ -50,7 +50,7 @@ $(document).ready(function() {
 #id_number { width: 98px; }
 </style>
 
-{% include 'client/error_form.html' %}
+{% include 'error_form.html' %}
 
 <div class="window">
   <div class="windowtitle">
@@ -62,8 +62,8 @@ $(document).ready(function() {
       <div id="client" style="clear:both">
         <div class="lineform">
           <div class="formcell">
-            {{ clientform.id }}
-            {{ clientform.clientgroup.label_tag }} {{ clientform.clientgroup }}
+            {{ form.id }}
+            {{ form.clientgroup.label_tag }} {{ form.clientgroup }}
             &nbsp;
             <input type="button" id="clientgroup_add" value=" + " style="width:20px;height:21px;">
           </div>
@@ -71,58 +71,58 @@ $(document).ready(function() {
         
         <div class="lineform">
           <div class="formcell">
-            {{ clientform.type.label_tag }} {{ clientform.type }}  
+            {{ form.type.label_tag }} {{ form.type }}  
           </div>
         </div>
         
         <div class="lineform">
           <div class="formcell">
-            {{ clientform.name.label_tag }} {{ clientform.name }}  
+            {{ form.name.label_tag }} {{ form.name }}  
           </div>
         </div>
         
         <div class="lineform">
           <div class="formcell">
-            {{ clientform.ssn.label_tag }} {{ clientform.ssn }}  
+            {{ form.ssn.label_tag }} {{ form.ssn }}  
           </div>
           <div class="formcell">
-            {{ clientform.ic.label }} {{ clientform.ic }}  
+            {{ form.ic.label }} {{ form.ic }}  
           </div>
           <div class="formcell">
-            {{ clientform.ic_agency.label }} {{ clientform.ic_agency }}  
-          </div>
-        </div>
-        
-        <div class="lineform">
-          <div class="formcell">
-            {{ clientform.nickname.label_tag }} {{ clientform.nickname }}  
-          </div>
-          <div class="formcell">
-            {{ clientform.birth.label }} {{ clientform.birth }}  
+            {{ form.ic_agency.label }} {{ form.ic_agency }}  
           </div>
         </div>
         
         <div class="lineform">
           <div class="formcell">
-            {{ clientform.phone1.label_tag }} {{ clientform.phone1 }}  
+            {{ form.nickname.label_tag }} {{ form.nickname }}  
           </div>
           <div class="formcell">
-            {{ clientform.phone2.label }} {{ clientform.phone2 }}
-          </div>
-          <div class="formcell">
-            {{ clientform.mobile.label }} {{ clientform.mobile }}
-          </div>
-          <div class="formcell">
-            {{ clientform.fax.label }} {{ clientform.fax }}  
+            {{ form.birth.label }} {{ form.birth }}  
           </div>
         </div>
         
         <div class="lineform">
           <div class="formcell">
-            {{ clientform.email.label_tag }} {{ clientform.email }}  
+            {{ form.phone1.label_tag }} {{ form.phone1 }}  
           </div>
           <div class="formcell">
-            {{ clientform.site.label }} {{ clientform.site }}  
+            {{ form.phone2.label }} {{ form.phone2 }}
+          </div>
+          <div class="formcell">
+            {{ form.mobile.label }} {{ form.mobile }}
+          </div>
+          <div class="formcell">
+            {{ form.fax.label }} {{ form.fax }}  
+          </div>
+        </div>
+        
+        <div class="lineform">
+          <div class="formcell">
+            {{ form.email.label_tag }} {{ form.email }}  
+          </div>
+          <div class="formcell">
+            {{ form.site.label }} {{ form.site }}  
           </div>
         </div>
 
@@ -144,7 +144,7 @@ $(document).ready(function() {
             </select>
           </div>
           <div class="formcell">
-            {{ clientform.zipcode.label }} {{ clientform.zipcode }}  
+            {{ form.zipcode.label }} {{ form.zipcode }}  
           </div>
         </div>
         
@@ -159,13 +159,13 @@ $(document).ready(function() {
             <input type="button" id="street_add" value=" + " style="width:20px;height:21px;">
           </div>
           <div class="formcell">
-            {{ clientform.number.label }} {{ clientform.number }}  
+            {{ form.number.label }} {{ form.number }}  
           </div>
         </div>
         
         <div class="lineform">
           <div class="formcell">
-            {{ clientform.reference.label_tag }} {{ clientform.reference }}  
+            {{ form.reference.label_tag }} {{ form.reference }}  
           </div>
         </div>
         

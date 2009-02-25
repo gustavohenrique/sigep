@@ -50,4 +50,8 @@ th {
 
 #button_menu_float li { padding: 4px; }
 
+#search_field {
+  width:98%;
+  padding:5px;
+}
 

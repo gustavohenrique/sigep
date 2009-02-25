@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div id="headmenu">
+  <div id="leftmenu" class="menulink">
+    <ul>
+      <li><a id="insert_menu" href="#" onclick="showMenu(this.id,200,320,26,0)">Cadastro</a></li>
+      <li><a id="find_menu" href="#" onclick="showMenu(this.id,180,65,26,0)">Pesquisa</a></li>
+      <li><a id="finance_menu" href="#" onclick="showMenu(this.id,180,65,26,0)">Financeiro</a></li>
+      <li><a id="tools_menu" href="#" onclick="showMenu(this.id,190,65,26,0)">Ferramentas</a></li>
+      <li><a id="report_menu" href="#" onclick="showMenu(this.id,190,65,26,0)">Relatórios</a></li>
+    </ul>
+  </div>
+  <div id="rightmenu" class="menulink" onclick="document.location='/auth/logout/'">&nbsp;</div>
+</div>
+    
+{% include 'menu.html' %}    
+    
+<center>
+<div id="content" align="center">
+   {% block content %}{% endblock %}
+</div>
+
+<div style="clear: both;"></div>
+</center>
+{% endblock %}

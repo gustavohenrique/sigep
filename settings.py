@@ -12,9 +12,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = os.path.join(PROJECT_ROOT_PATH, 'sigep.db')             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
+DATABASE_ENGINE = 'mysql'  #'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = 'sigep2'  #os.path.join(PROJECT_ROOT_PATH, 'sigep.db')             # Or path to database file if using sqlite3.
+DATABASE_USER = 'sigep'             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
@@ -85,13 +85,15 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'sigep.ajaxtools',
     'sigep.client',
+    'sigep.networknode',
 )
 
-DATE_FORMAT = 'd\/m\/Y'
+DATE_FORMAT = 'd/m/Y'
+DATETIME_FORMAT = 'd/m/Y - H:i:s'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 LOGIN_URL = '/auth/login/'
 LOGOUT_URL = '/auth/logout/'
 LOGIN_REDIRECT_URL = '/client/list/'
 
 
-
+INITIAL_IP='9.0.0.10'
