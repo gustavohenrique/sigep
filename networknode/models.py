@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from sigep.client.models import Client
 
@@ -40,18 +41,37 @@ class AccessPoint(models.Model):
     db_table = 'accesspoint'
 
 
-class Proxy(models.Model):
-  proxy = models.CharField(max_length=100,unique=True)
-  desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'))
+class Server(models.Model):
+  
+  servername = models.CharField(max_length=100,unique=True)
   ip = models.IPAddressField(unique=True)
-  netmask = models.IPAddressField(verbose_name=_(u'Máscara'))
+  default = models.CharField(max_length=1,choices=settings.BOOLEAN_CHOICES,default='N')
+  desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'))
+  
+  class Meta:
+    abstract = True
 
+
+class Proxy(Server):
+  
   def __unicode__(self):
-    return self.proxy
+    return self.servername
 
   class Meta:
-    ordering = ('proxy','ip')
+    ordering = ('servername','ip')
     db_table = 'proxy'
+
+
+class Router(Server):
+  mark = models.PositiveSmallIntegerField(max_length=2,verbose_name=_(u'Marcação'))
+  iface = models.CharField(max_length=4,verbose_name='Interface')
+  
+  def __unicode__(self):
+    return self.servername
+
+  class Meta:
+    ordering = ('iface','mark')
+    db_table = 'router'
 
 
 class Hardware(models.Model):
@@ -70,6 +90,7 @@ class NetworkNode(models.Model):
   plan = models.ForeignKey(Plan,verbose_name=_(u'Plano'))
   accesspoint = models.ForeignKey(AccessPoint,verbose_name=_(u'AP/Switch'))
   proxy = models.ForeignKey(Proxy,blank=True,null=True)
+  router = models.ForeignKey(Router,blank=True,null=True,verbose_name=_(u'Roteador'))
   hardware = models.ForeignKey(Hardware,verbose_name=_(u'Equipamento'),blank=True,null=True)
   ip = models.IPAddressField('IP',db_index=True)
   mac = models.CharField('MAC',max_length=17,blank=True,null=True,db_index=True)

@@ -95,5 +95,8 @@ LOGIN_URL = '/auth/login/'
 LOGOUT_URL = '/auth/logout/'
 LOGIN_REDIRECT_URL = '/client/list/'
 
-
+BOOLEAN_CHOICES = (
+  ('Y','Sim'),
+  ('N','Não')
+)
 INITIAL_IP='9.0.0.10'

@@ -1,4 +1,4 @@
-<div id="insert_menu_float" class="menufloat">
+<div id="file_menu_float" class="menufloat">
   <h2>CLIENTE</h2>
   <ul>
     <li><a href="{% url client_list %}">Clientes</a></li>
@@ -10,12 +10,18 @@
     <li><a href="/">Bairros</a></li>
     <li><a href="/">Cidades</a></li>
   </ul>
-  <h2>PROVEDOR</h2>
+</div>
+
+<div id="provider_menu_float" class="menufloat">
+  <h2>SERVIDOR</h2>
   <ul>
-    <li><a href="#" onclick="window.open('/admin/networknode/accesspoint/','AP','width=600,height=400')">Access Point/Switch</a></li>
+    <li><a href="#">Proxy</a></li>
+    <li><a href="/">Roteadores</a></li>
+  </ul>
+  <h2>ACESSO</h2>
+  <ul>
     <li><a href="#" onclick="window.open('/admin/networknode/plan/','Plan','width=600,height=400')">Planos de Acesso</a></li>
+    <li><a href="#" onclick="window.open('/admin/networknode/accesspoint/','AP','width=600,height=400')">Access Point/Switch</a></li>
     <li><a href="#" onclick="window.open('/admin/networknode/hardware/','Hardware','width=600,height=400')">Tipos de Equipamentos</a></li>
-    <li><a href="#">Dados sobre a Empresa</a></li>
-    <li><a href="#">Servidores Proxy</a></li>
   </ul>
 </div>
