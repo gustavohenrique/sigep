@@ -88,7 +88,7 @@ class Hardware(models.Model):
 class NetworkNode(models.Model):
   client = models.ForeignKey(Client,verbose_name=_(u'Cliente'))
   plan = models.ForeignKey(Plan,verbose_name=_(u'Plano'))
-  accesspoint = models.ForeignKey(AccessPoint,verbose_name=_(u'AP/Switch'))
+  accesspoint = models.ForeignKey(AccessPoint,verbose_name=_(u'AP/Switch'),help_text='Access Point ou Hub/Switch')
   proxy = models.ForeignKey(Proxy,blank=True,null=True)
   router = models.ForeignKey(Router,blank=True,null=True,verbose_name=_(u'Roteador'))
   hardware = models.ForeignKey(Hardware,verbose_name=_(u'Equipamento'),blank=True,null=True)

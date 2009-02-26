@@ -31,3 +31,4 @@ input[type="submit"], input[type="button"] {
   margin-top: 0px;
   color: red;
 }
+.helptext { color: gray; padding-left: 10px; }
