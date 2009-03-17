@@ -23,6 +23,7 @@ class StreetAdmin(ModelAdmin):
   list_filter = ('neighborhood',)
   ordering = ['street','neighborhood']
   
+
 admin.site.register(City, CityAdmin)
 admin.site.register(Neighborhood, NeighborhoodAdmin)
 admin.site.register(Street, StreetAdmin)

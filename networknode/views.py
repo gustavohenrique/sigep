@@ -4,15 +4,16 @@ from sigep.networknode.models import *
 from sigep.networknode.forms import *
 
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def list(request):
   """
   Listar os pontos de rede do cliente selecionado
   Exibe a tela contendo um datagrid com todos os pontos de rede
-  do cliente e um form para cadastrar um novo.
+  do cliente e um form para novo cadastro.
   """
 
   if request.method == 'GET':
@@ -34,6 +35,7 @@ def list(request):
   else:
     return HttpResponse('raise Http404')
 
+
 @login_required
 def add(request):
   """
@@ -53,13 +55,14 @@ def add(request):
   else:
     raise Http404
 
+
 @login_required
 def edit(request):
   """
   Editar Cliente.
   Obtem dados do cliente e exibe a tela contendo o form para alteracao de dados.
   """
-  '''
+
   if request.method == 'POST':
     try:
       # tenta converter id para um numero inteiro
@@ -67,18 +70,23 @@ def edit(request):
     except:
       id= 0
 
-    client = get_object_or_404(Client, pk=id)
-    #client.birth = client.birth.strftime("%d-%m-%Y")
+    n = get_object_or_404(NetworkNode, pk=id)
+    client_name = n.client.name
+    client_id = n.client.id
     # cria o form
-    c = ClientForm(instance=client)
-    #c.base_fields['birth'].input_formats = ('%d/%m/%Y',)
-    # obtem dados do cliente e a lista de bairros e cidade de acordo com a rua
-    listing = c.formfill(client)
-    listing.append(('option','update'))
-    return render_to_response('client/client_form_edit.html', dict(listing))
+    nform = NetworkNodeForm(instance=n)
+    dic = {
+      'form':nform,
+      'option':'update',
+      'client':client_name,
+      'client_id':client_id,
+      'id':id
+    }
+    return render_to_response('networknode/n_form_edit.html', dic)
 
   else:
-    raise Http404'''
+    raise Http404
+
 
 @login_required
 def update(request):
@@ -86,27 +94,32 @@ def update(request):
   Atualizar cliente.
   Atualiza os dados do cliente selecionado.
   """
-  '''
+
   if request.method == 'POST':
-    # tenta converter id para um numero inteiro
+
     try:
       id = int(request.POST.get('id'))
     except:
       id = 0
 
-    client = get_object_or_404(Client, pk=id)
-    c = ClientForm(request.POST, instance=client)
-    c.base_fields['birth'].input_formats = ('%d/%m/%Y',)
-    # se todos os dados estão corretos, exibe a tela de clientes cadastrados
-    if c.is_valid():
-      c.save()
-      return HttpResponseRedirect(reverse('client_list'))
+    n = get_object_or_404(NetworkNode, pk=id)
+    client_name = n.client.name
+    client_id = n.client.id
+    nform = NetworkNodeForm(request.POST, instance=n)
+
+    if nform.is_valid():
+      # verifica se o ip ja estah em uso por outro ponto de rede
+      nform.save()
+      return HttpResponseRedirect('/networknode/list/?id=%s' % client_id)
     else:
-      listing = c.formfill(client)
-      listing.append(('status','error'))
-      listing.append(('option','update'))
-      return render_to_response('client/client_form_edit.html', dict(listing))
+      dic = {
+        'form':nform,
+        'option':'update',
+        'client':client_name,
+        'client_id':client_id,
+        'id':id
+      }
+      return render_to_response('networknode/n_form_edit.html', dic)
 
   else:
-    raise Http404'''
-
+    raise Http404

@@ -3,6 +3,7 @@
   <ul>
     <li><a href="{% url client_list %}">Clientes</a></li>
     <li><a href="/">Grupos</a></li>
+    <li><a href="/">Cancelamentos</a></li>
   </ul>
   <h2>ENDEREÇO</h2>
   <ul>
@@ -13,15 +14,14 @@
 </div>
 
 <div id="provider_menu_float" class="menufloat">
-  <h2>SERVIDOR</h2>
+  <h2>HARDWARE</h2>
   <ul>
-    <li><a href="#">Proxy</a></li>
-    <li><a href="/">Roteadores</a></li>
+    <li><a href="#" onclick="window.open('/admin/networknode/router/','Plan','width=600,height=400')">Router/Proxy</a></li>
+    <li><a href="#" onclick="window.open('/admin/networknode/accesspoint/','AP','width=600,height=400')">Access Point/Switch</a></li>
   </ul>
   <h2>ACESSO</h2>
   <ul>
     <li><a href="#" onclick="window.open('/admin/networknode/plan/','Plan','width=600,height=400')">Planos de Acesso</a></li>
-    <li><a href="#" onclick="window.open('/admin/networknode/accesspoint/','AP','width=600,height=400')">Access Point/Switch</a></li>
     <li><a href="#" onclick="window.open('/admin/networknode/hardware/','Hardware','width=600,height=400')">Tipos de Equipamentos</a></li>
   </ul>
 </div>

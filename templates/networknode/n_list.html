@@ -2,17 +2,21 @@
 
 {% block main %}
 <script src="/media/js/app/networknode.js" language="javascript" type="text/javascript"></script>
+<!--
 <script type="text/javascript">
 $(document).ready(function() {
   $('#windowform_hide_show').trigger('click');
 });
 </script>
-<div class="window">
+-->
+<div id="datagrid" class="window">
   <div class="windowtitle">
     <h1>PONTOS DE REDE DE <span style="color:red;">{{ client }}</span></h1>
     <div id="windowlisting_hide_show" class="buttonhide" onclick="hide_show_window(this.id);"></div>
   </div>
   <div id="windowlisting" class="windowcontent">
+    <!-- id do cliente usado para listar seus pontos de rede -->
+    <input type="hidden" id="obj_id" value="{{ client_id }}">
 
     <!-- datagrid contendo todos os clientes cadastrados -->
     {% include 'datagrid.html' %}

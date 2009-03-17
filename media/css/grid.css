@@ -48,7 +48,7 @@ th {
 #nextbutton { background : url(../image/grid/next.png); }
 #lastbutton { background : url(../image/grid/last.png); }
 
-#button_menu_float li { padding: 4px; }
+#button_other_float li { padding: 4px; }
 
 #search_field {
   width:98%;

@@ -3,18 +3,19 @@
  * Recebe um dicionario contendo dados para criar o datagrid.
  * @page Numero da pagina
  * @url URL que recebera a requisicao ajax
- */ 
+ */
 function _pagination(page, url) {
-  var dados, text_search;
+  var dados, search_text;
   search_text = $('#search_field').val();
-  dados = {'page':page, 'search_text':search_text}
+  // obj_id eh o id de algum objeto inserido dentro de um input hidden
+  dados = {'page':page, 'search_text':search_text, 'obj_id':$('#obj_id').val()}
   $.ajax({
     type: 'POST',
     url: url,
     dataType: "json",
     data: dados,
     success: function(retorno) {
-      
+
       // Para cada item do dicionario retornado...
       $.each(retorno, function(i, item) {
         // Atualiza os dados da barra de navegacao
@@ -23,10 +24,10 @@ function _pagination(page, url) {
         $('#id_current').text(item.current_page);
         $('#id_num_pages').text(item.num_pages);
         $('#id_total_result').text('TOTAL: '+item.total_result);
-        
+
         // Obtem a lista com dados da consulta
         listing = item.listing;
-        
+
         // Atualiza as linhas do datagrid com os novos dados
         $('#listing > tbody').empty();
         for (i=0; i<listing.length; i++) {
@@ -48,8 +49,11 @@ function _pagination(page, url) {
 
 /**
  * Procedimentos executados ao carregar o datagrid.
- */ 
+ */
 $(document).ready(function() {
+  // Esconde o div contendo o form para cadastro
+  $('#divnew').hide();
+
   // Atualiza o cabecalho da tabela com o nome dos campos
   $('#listing > thead').empty();
   $('#listing > thead').append('<tr>');
@@ -58,7 +62,7 @@ $(document).ready(function() {
     $('#listing tr:last').append('<th style="width:'+item+'">'+key+'</th>');
   });
   $('#listing').append('</tr>');
-  
+
   // Adiciona as acoes aos botoes de navegacao
   $('#firstbutton').click(function() {
     _pagination(1, grid_url);
@@ -75,27 +79,41 @@ $(document).ready(function() {
     page = $('#id_num_pages').text();
     _pagination(page, grid_url);
   });
-  
+
   // Ao ser carregado, preenche o datagrid com resultados da primeira pagina
   _pagination(1, grid_url);
-  
+
   // Cria um menu flutuante de acordo com o array definido no modulo
   $.each(grid_custom_menu, function(key, value) {
     if (! value.ajax)
-      $('#button_menu_float ul:last').append('<li><a href="#" onclick="submitForm(\''+value.url+'\','+value.confirmation+')">'+key+'</a></li>');
+      $('#button_other_float ul:last').append('<li><a href="#" onclick="submitForm(\''+value.url+'\','+value.confirmation+')">'+key+'</a></li>');
     else
-      $('#button_menu_float ul:last').append('<li><a href="#" onclick="'+value.ajax+'">'+key+'</a></li>');
+      $('#button_other_float ul:last').append('<li><a href="#" onclick="'+value.ajax+'">'+key+'</a></li>');
   });
-  
+
+  // Acoes do botao Editar e Excluir
+  $('#button_edit').click(function() {
+    submitForm(edit_url,false);
+  });
+  $('#button_delete').click(function() {
+    deleteAjax();
+  });
+
   // Ajusta a posicao do menu flutuante e adiciona ao evento click do botao
-  $('#button_menu').click(function() {
+  $('#button_other').click(function() {
     var h, p;
     h = $('#'+this.id).height();
     p = $('#'+this.id).offset();
-    top = (p.top - $('#button_menu_float').height());
+    top = (p.top - $('#button_other_float').height());
     showMenu(this.id, 0, 0, top, p.left);
   });
-  
+
+  // Ao clicar no botao Novo, esconde o datagrid e exibe o form para cadastro
+  $('#button_insert').click(function() {
+    $('#datagrid').hide();
+    $('#divnew').show();
+  });
+
   // Limpa o campo de busca ao obter foco
   $('#search_field').focus(function() { $(this).val(''); });
   // A cada tecla pressionada, atualiza o datagrid
@@ -112,14 +130,14 @@ function showMenu(component,width, height, top, left) {
   var position, menu;
   position = $('#'+component).offset();
   menu = component+'_float'; // mesmo nome do componente, com sufixo _float
-    
+
   $('.menufloat').hide(); // esconde todos os menus com class="menufloat"
   if (width > 0) $('#'+menu).css({ width: width });
   if (height > 0) $('#'+menu).css({ height: height });
   if (top > 0) $('#'+menu).css({ top: top }); else $('#'+menu).css({ top: position.top });
   if (left > 0) $('#'+menu).css({ left: left }); else $('#'+menu).css({ left: position.left });
   $('#'+menu).show(); // exibe o menu na tela apos definida sua posicao e tamanho
-  
+
   // quando o menu perder o foco, eh iniciada a funcao que o esconde
   $('#'+menu).mouseover(function() { menuIsVisible = true; });
   $('#'+menu).mouseout(function() { menuIsVisible = false; hideMenu(menu); });

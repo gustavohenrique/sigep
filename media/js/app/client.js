@@ -1,4 +1,5 @@
 grid_url = '/client/ajax/datagridx/';
+edit_url = '/client/edit/';
 grid_fields = {
   'NOME': '300px',
   'TELEFONE': '100px',
@@ -6,8 +7,8 @@ grid_fields = {
   'BAIRRO': '100px'
 };
 grid_custom_menu = {
-  'Editar': {'url':'/client/edit/', 'confirmation':false, 'ajax':false},
-  'Excluir':{'url':'#', 'ajax':'deleteAjax()'},
+  'Contrato':{'url':'#', 'ajax':'agreement()'},
+  'Cancelamento da Conta':{'url':'#', 'ajax':'cancelAccount()'},
   'Pontos de Rede':{'url':'#', 'ajax':'networkNode()'},
 };
 
@@ -23,7 +24,6 @@ function deleteAjax() {
       success: function(retorno) {
         page = $('#id_current').text();
         _pagination(page, grid_url);
-        //alert('ok, foi');
       },
       error: function(error) {
         alert('Erro: '+error);

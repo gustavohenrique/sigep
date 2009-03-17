@@ -99,4 +99,7 @@ BOOLEAN_CHOICES = (
   ('Y','Sim'),
   ('N','Não')
 )
-INITIAL_IP='9.0.0.10'
+
+MIN_IP = '9.0.0.10'
+MAX_IP = '9.0.4.254'
+NETMASK = 16

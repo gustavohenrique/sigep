@@ -8,9 +8,9 @@
 
 {% include 'error_form.html' %}
 
-<div class="window">
+<div id="divnew" class="window">
   <div class="windowtitle">
-    <h1>{% if option %}ALTERAR PONTO DE REDE DE{% else %}CADASTRAR PONTO DE REDE DE{% endif %} <span style="color:red">{{ client }}</span></h1>
+    <h1>{% if option %}ALTERAR PONTO DE REDE DE{% else %}CADASTRAR PONTO DE REDE DE{% endif %} <span style="color:red">{{ client|upper }}</span></h1>
     <div id="windowform_hide_show" class="buttonhide" onclick="hide_show_window(this.id);"></div>
   </div>
   <div id="windowform" class="windowcontent">
@@ -20,7 +20,7 @@
       <div id="client" style="clear:both">
         <div class="lineform">
           <div class="formcell">
-            {{ form.plan.label_tag }} {{ form.plan }}
+            {{ form.plan.label_tag }} {{ form.plan }} <span class="helptext">{{ form.plan.help_text }}</span>
           </div>
         </div>
 
@@ -32,61 +32,51 @@
 
         <div class="lineform">
           <div class="formcell">
-            {{ form.router.label_tag }} {{ form.router }}
-          </div>
-        </div>
-        
-        <div class="lineform">
-          <div class="formcell">
-            {{ form.proxy.label_tag }} {{ form.proxy }}
+            {{ form.router.label_tag }} {{ form.router }} <span class="helptext">{{ form.router.help_text }}</span>
           </div>
         </div>
 
         <div class="lineform">
           <div class="formcell">
-            {{ form.hardware.label_tag }} {{ form.hardware }}
+            {{ form.useproxy.label_tag }} {{ form.useproxy }} <span class="helptext">{{ form.useproxy.help_text }}</span>
           </div>
         </div>
 
         <div class="lineform">
           <div class="formcell">
-            {{ form.ip.label_tag }} {{ form.ip }}
+            {{ form.hardware.label_tag }} {{ form.hardware }} <span class="helptext">{{ form.hardware.help_text }}</span>
           </div>
         </div>
 
         <div class="lineform">
           <div class="formcell">
-            {{ form.mac.label_tag }} {{ form.mac }}
+            {{ form.ip.label_tag }} {{ form.ip }} <span class="helptext">{{ form.ip.help_text }}</span>
           </div>
         </div>
 
         <div class="lineform">
           <div class="formcell">
-            {{ form.desc.label_tag }} {{ form.desc }}
+            {{ form.mac.label_tag }} {{ form.mac }} <span class="helptext">{{ form.mac.help_text }}</span>
           </div>
         </div>
 
         <div class="lineform">
           <div class="formcell">
-            <label>&nbsp;</label> {{ form.blocked }}  {{ form.blocked.label }}
-          </div>
-
-          <div class="formcell">
-            <label>&nbsp;</label> {{ form.allowed }}  {{ form.allowed.label }}
+            {{ form.desc.label_tag }} {{ form.desc }} <span class="helptext">{{ form.desc.help_text }}</span>
           </div>
         </div>
 
         <div class="lineform">
           <div class="formcell">
-            <label>&nbsp;</label>
-            {% if option %}
-              <input type="submit" value="Atualizar">&nbsp;
-              <input type="button" value="Voltar" onclick="history.go(-1)">
-            {% else %}
-              <input type="submit" value="Cadastrar">
-            {% endif %}
+            {{ form.isblocked.label_tag }} {{ form.isblocked }} <span class="helptext">{{ form.isblocked.help_text }}</span>
+          </div>
+
+          <div class="formcell">
+            {{ form.isbound.label_tag }} {{ form.isbound }} <span class="helptext">{{ form.isbound.help_text }}</span>
           </div>
         </div>
+
+        {% include 'footer_form_add.html' %}
 
         <div style="clear:both;"></div>
       </div>

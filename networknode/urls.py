@@ -10,5 +10,8 @@ urlpatterns = patterns ('sigep.networknode.views',
 urlpatterns += patterns ('sigep.networknode.ajax',
   url(r'^ajax/datagridx/$', 'datagridx', name='networknode_ajax_datagridx'),
   url(r'^ajax/deletex/$', 'deletex', name='networknode_ajax_deletex'),
+  url(r'^ajax/unblock/$', 'unblock', name='networknode_ajax_unblock'),
+  url(r'^ajax/unbound/$', 'unbound', name='networknode_ajax_unbound'),
+  url(r'^ajax/useproxy/$', 'useproxy', name='networknode_ajax_useproxy'),
 )
 

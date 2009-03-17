@@ -10,6 +10,7 @@
 $(document).ready(function() {
   // Adiciona o componente jquery calendar ao campo
   $('#id_birth').calendar();
+
   // Adiciona ajax nos combobox
   $('#id_city').change(function() {
     comboAjax('id_neighborhood', this.value, '{% url comboajax "Neighborhood" "city" "neighborhood" %}');
@@ -19,7 +20,7 @@ $(document).ready(function() {
   $('#id_neighborhood').change(function() {
     comboAjax('id_street', this.value, '{% url comboajax "Street" "neighborhood" "street" %}');
   });
-  
+
   // Acao ao botao add street
   $('#street_add').click(function(){
     window.open('/admin/client/street/add/','Street','width=400,height=100');
@@ -27,6 +28,7 @@ $(document).ready(function() {
   $('#clientgroup_add').click(function(){
     window.open('/admin/client/clientgroup/add/','Street','width=400,height=100');
   });
+
 })
 </script>
 
@@ -52,7 +54,7 @@ $(document).ready(function() {
 
 {% include 'error_form.html' %}
 
-<div class="window">
+<div id="divnew" class="window">
   <div class="windowtitle">
     <h1>{% if option %}ALTERAR CLIENTE{% else %}CADASTRAR CLIENTE{% endif %}</h1>
     <div id="windowform_hide_show" class="buttonhide" onclick="hide_show_window(this.id);"></div>
@@ -68,43 +70,43 @@ $(document).ready(function() {
             <input type="button" id="clientgroup_add" value=" + " style="width:20px;height:21px;">
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
-            {{ form.type.label_tag }} {{ form.type }}  
+            {{ form.type.label_tag }} {{ form.type }}
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
-            {{ form.name.label_tag }} {{ form.name }}  
+            {{ form.name.label_tag }} {{ form.name }}
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
-            {{ form.ssn.label_tag }} {{ form.ssn }}  
+            {{ form.ssn.label_tag }} {{ form.ssn }}
           </div>
           <div class="formcell">
-            {{ form.ic.label }} {{ form.ic }}  
+            {{ form.ic.label }} {{ form.ic }}
           </div>
           <div class="formcell">
-            {{ form.ic_agency.label }} {{ form.ic_agency }}  
+            {{ form.ic_agency.label }} {{ form.ic_agency }}
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
-            {{ form.nickname.label_tag }} {{ form.nickname }}  
+            {{ form.nickname.label_tag }} {{ form.nickname }}
           </div>
           <div class="formcell">
-            {{ form.birth.label }} {{ form.birth }}  
+            {{ form.birth.label }} {{ form.birth }}
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
-            {{ form.phone1.label_tag }} {{ form.phone1 }}  
+            {{ form.phone1.label_tag }} {{ form.phone1 }}
           </div>
           <div class="formcell">
             {{ form.phone2.label }} {{ form.phone2 }}
@@ -113,16 +115,16 @@ $(document).ready(function() {
             {{ form.mobile.label }} {{ form.mobile }}
           </div>
           <div class="formcell">
-            {{ form.fax.label }} {{ form.fax }}  
+            {{ form.fax.label }} {{ form.fax }}
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
-            {{ form.email.label_tag }} {{ form.email }}  
+            {{ form.email.label_tag }} {{ form.email }}
           </div>
           <div class="formcell">
-            {{ form.site.label }} {{ form.site }}  
+            {{ form.site.label }} {{ form.site }}
           </div>
         </div>
 
@@ -144,10 +146,10 @@ $(document).ready(function() {
             </select>
           </div>
           <div class="formcell">
-            {{ form.zipcode.label }} {{ form.zipcode }}  
+            {{ form.zipcode.label }} {{ form.zipcode }}
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
             <label for="id_street">Endereço</label>
@@ -159,28 +161,18 @@ $(document).ready(function() {
             <input type="button" id="street_add" value=" + " style="width:20px;height:21px;">
           </div>
           <div class="formcell">
-            {{ form.number.label }} {{ form.number }}  
+            {{ form.number.label }} {{ form.number }}
           </div>
         </div>
-        
+
         <div class="lineform">
           <div class="formcell">
-            {{ form.reference.label_tag }} {{ form.reference }}  
+            {{ form.reference.label_tag }} {{ form.reference }}
           </div>
         </div>
-        
-        <div class="lineform">
-          <div class="formcell">
-            <label>&nbsp;</label>
-            {% if option %}
-              <input type="submit" value="Atualizar">&nbsp;
-              <input type="button" value="Voltar" onclick="history.go(-1)">
-            {% else %}
-              <input type="submit" value="Cadastrar">
-            {% endif %}
-          </div>
-        </div>
-        
+
+        {% include 'footer_form_add.html' %}
+
         <div style="clear:both;"></div>
       </div>
     </form>

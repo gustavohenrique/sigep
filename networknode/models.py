@@ -42,35 +42,24 @@ class AccessPoint(models.Model):
 
 
 class Server(models.Model):
-  
-  servername = models.CharField(max_length=100,unique=True)
-  ip = models.IPAddressField(unique=True)
-  default = models.CharField(max_length=1,choices=settings.BOOLEAN_CHOICES,default='N')
+  hostname = models.CharField(max_length=100,unique=True,verbose_name="Hostname")
+  ip = models.IPAddressField(unique=True,verbose_name="IP")
+  ilan = models.CharField(max_length=4,verbose_name='Interface')
   desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'))
-  
+
   class Meta:
     abstract = True
 
 
-class Proxy(Server):
-  
-  def __unicode__(self):
-    return self.servername
-
-  class Meta:
-    ordering = ('servername','ip')
-    db_table = 'proxy'
-
-
 class Router(Server):
   mark = models.PositiveSmallIntegerField(max_length=2,verbose_name=_(u'Marcação'))
-  iface = models.CharField(max_length=4,verbose_name='Interface')
-  
+  isproxy = models.BooleanField(default=True,verbose_name='Proxy?')
+
   def __unicode__(self):
-    return self.servername
+    return self.hostname
 
   class Meta:
-    ordering = ('iface','mark')
+    ordering = ('ilan','mark')
     db_table = 'router'
 
 
@@ -87,16 +76,16 @@ class Hardware(models.Model):
 
 class NetworkNode(models.Model):
   client = models.ForeignKey(Client,verbose_name=_(u'Cliente'))
-  plan = models.ForeignKey(Plan,verbose_name=_(u'Plano'))
-  accesspoint = models.ForeignKey(AccessPoint,verbose_name=_(u'AP/Switch'),help_text='Access Point ou Hub/Switch')
-  proxy = models.ForeignKey(Proxy,blank=True,null=True)
-  router = models.ForeignKey(Router,blank=True,null=True,verbose_name=_(u'Roteador'))
-  hardware = models.ForeignKey(Hardware,verbose_name=_(u'Equipamento'),blank=True,null=True)
-  ip = models.IPAddressField('IP',db_index=True)
-  mac = models.CharField('MAC',max_length=17,blank=True,null=True,db_index=True)
-  desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'))
-  blocked = models.BooleanField(verbose_name=_(u'Bloqueado'),default=False,db_index=True)
-  allowed = models.BooleanField(verbose_name=_(u'Liberado sem MAC'),default=True,db_index=True)
+  plan = models.ForeignKey(Plan,verbose_name=_(u'Plano'),help_text='Plano de Acesso contendo downstream e upstream')
+  accesspoint = models.ForeignKey(AccessPoint,blank=True,null=True,verbose_name=_(u'AP/Switch'),help_text='Access Point ou Switch o qual está conectado')
+  router = models.ForeignKey(Router,verbose_name=_(u'Rota'),help_text='Servidor atuando como roteador e proxy')
+  hardware = models.ForeignKey(Hardware,verbose_name=_(u'Equipamento'),blank=True,null=True,help_text='Tipo de equipamento')
+  ip = models.IPAddressField('IP',db_index=True,help_text='Endereço IP classe A. Ex.: 10.0.0.2')
+  mac = models.CharField('MAC',max_length=17,blank=True,null=True,db_index=True,help_text='Endereço físico no formato XX:XX:XX:XX:XX:XX')
+  desc = models.CharField(max_length=250,blank=True,null=True,verbose_name=_(u'Descrição'),help_text='Breve descrição')
+  useproxy = models.CharField(max_length=1,choices=settings.BOOLEAN_CHOICES,default='Y',verbose_name='Usa Proxy',help_text='Define se vai utilizar o proxy transparente')
+  isblocked = models.CharField(max_length=1,choices=settings.BOOLEAN_CHOICES,default='N',verbose_name=_(u'Bloqueado'),db_index=True,help_text='Bloqueia o acesso à internet')
+  isbound = models.CharField(max_length=1,choices=settings.BOOLEAN_CHOICES,default='N',verbose_name=_(u'Amarrado'),db_index=True,help_text='Se o IP não estiver amarrado ao MAC, qualquer placa de rede poderá utiliza-lo')
 
   def __unicode__(self):
     return self.ip
@@ -107,4 +96,19 @@ class NetworkNode(models.Model):
     verbose_name_plural = 'Pontos de Rede'
     db_table = 'networknode'
 
+  def save(self):
+    try:
+      """O mesmo IP pode estar cadastrado mais de uma vez desde que seja
+      para o mesmo cliente. Isso acontence quando se deseja utiliza-lo
+      em com MACs diferentes"""
 
+      nodes = NetworkNode.objects.filter(ip=self.ip)
+      inuse = False
+      for n in nodes:
+        if n.client.id != self.client.id:
+          inuse = True
+
+      if inuse == False:
+        super(NetworkNode, self).save()
+    except:
+      super(NetworkNode, self).save()

@@ -1,0 +1,22 @@
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+  // Ao clicar no botao Cancelar, exibe o datagrid e esconde o form para cadastro
+  $('#button_cancel').click(function() {
+    $('#datagrid').show();
+    $('#divnew').hide();
+  });
+})
+</script>
+
+<div class="lineform">
+  <div class="formcell">
+    <label>&nbsp;</label>
+    {% if option %}
+      <input type="submit" value="Atualizar">&nbsp;
+      <input type="button" value="Voltar" onclick="history.go(-1)">
+    {% else %}
+      <input type="submit" value="Cadastrar">
+      <input type="button" value="Cancelar" id="button_cancel">
+    {% endif %}
+  </div>
+</div>

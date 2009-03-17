@@ -5,9 +5,10 @@ from django.forms.fields import CharField, DateField, IntegerField
 from django.forms.widgets import DateTimeInput, HiddenInput
 from django.contrib.localflavor.br.forms import BRStateSelect
 
-from sigep.client.models import *
+from sigep.client.models import Client, City, Neighborhood, Street
 
 class CityForm(ModelForm):
+  # Estados brasileiros
   state = CharField(label="UF",widget=BRStateSelect(),initial='RJ')
   
   class Meta:
@@ -17,7 +18,7 @@ class CityForm(ModelForm):
 class ClientForm(ModelForm):
 
   # campo hidden contendo o id do cliente.
-  # usado pelo metodo update para saber o id do objeto a ser atualizado.
+  # usado pelo metodo update para saber o id do cliente a ser atualizado.
   id = IntegerField(required=False,widget=HiddenInput())
   
   # campo data usando jquery calendar para aceitar apenas data no formato especificado
@@ -27,12 +28,10 @@ class ClientForm(ModelForm):
     """
     Obtem os dados do cliente que serao exibidos nos campos do form.
     Se nenhum objeto cliente for recebido como argumento, seleciona a primeira
-    cidade de todas cadastradas e a partir dela os respectivos bairros, e a
+    cidade de todas cadastradas e a partir dela os respectivos bairros e a
     ruas referentes ao primeiro bairro de todos os cadastrados.
-    
     Senão, vai obter todos os bairros e a respectiva cidade do primeiro bairro,
     a partir da rua associada ao objeto.
-    
     Retorna uma lista de tuplas contendo os dados do cliente, bairros e cidades.
     """
     
@@ -86,7 +85,6 @@ class ClientForm(ModelForm):
     
     return listing
   
-    
   class Meta:
     model = Client
 
